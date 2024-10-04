@@ -24,10 +24,11 @@ function App({}: Props) {
     shoppingItems: shoppingItems[];
   };
 
-  type ItemActionType = {
-    type: string;
-    payload: string;
-  };
+  type actionType =
+    | { type: "change"; payload: string }
+    | { type: "add" }
+    | { type: "delete"; payload: number }
+    | { type: "edit"; payload: number };
 
   const initialValue: State = {
     inputItem: "",
@@ -36,7 +37,7 @@ function App({}: Props) {
 
   const counterRef = useRef(0);
 
-  function reducer(state: State, action: ItemActionType): State {
+  function reducer(state: State, action: actionType): State {
     switch (action.type) {
       case "change":
         return { ...state, inputItem: action.payload };
@@ -78,7 +79,7 @@ function App({}: Props) {
   };
 
   const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    dispatch({ type: "add", payload: "" });
+    dispatch({ type: "add" });
   };
 
   const handleOnDelete = (id: number) => {
