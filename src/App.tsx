@@ -8,6 +8,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Input from "@mui/material/Input";
 import Stack from "@mui/material/Stack";
 import { red } from "@mui/material/colors";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 type Props = {};
 
@@ -137,13 +138,27 @@ function App({}: Props) {
         <FormGroup sx={{ height: "150px", overflowY: "auto" }}>
           <Box component="ul" sx={{ padding: "10px" }}>
             {state.shoppingItems.map((item) => (
-              <Box component="li" key={item.id} sx={{ listStyle: "none" }}>
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label={item.itemName}
-                  sx={{ color: "black" }}
-                />
-              </Box>
+              <Stack
+                direction="row"
+                justifyContent="space"
+                alignItems={"center"}
+                sx={{ justifyContent: "space-between" }}
+              >
+                <Box component="li" key={item.id} sx={{ listStyle: "none" }}>
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label={item.itemName}
+                    sx={{ color: "black" }}
+                  />
+                </Box>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  startIcon={<DeleteIcon />}
+                >
+                  Delete
+                </Button>
+              </Stack>
             ))}
           </Box>
         </FormGroup>
