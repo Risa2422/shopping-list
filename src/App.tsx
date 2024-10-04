@@ -9,6 +9,7 @@ import Input from "@mui/material/Input";
 import Stack from "@mui/material/Stack";
 import { red } from "@mui/material/colors";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Edit from "@mui/icons-material/Edit";
 
 type Props = {};
 
@@ -159,14 +160,19 @@ function App({}: Props) {
                     sx={{ color: "black" }}
                   />
                 </Box>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  startIcon={<DeleteIcon />}
-                  onClick={() => handleOnDelete(item.id)}
-                >
-                  Delete
-                </Button>
+                <Stack direction="row" spacing={1}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    startIcon={<DeleteIcon />}
+                    onClick={() => handleOnDelete(item.id)}
+                  >
+                    Delete
+                  </Button>
+                  <Button variant="contained" size="small" startIcon={<Edit />}>
+                    Edit
+                  </Button>
+                </Stack>
               </Stack>
             ))}
           </Box>
