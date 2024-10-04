@@ -57,7 +57,10 @@ function App({}: Props) {
         };
 
       case "delete":
-        return state;
+        const newState = state.shoppingItems.filter(
+          (item) => item.id !== action.payload
+        );
+        return { ...state, shoppingItems: newState };
 
       case "edit":
         return state;
@@ -76,6 +79,10 @@ function App({}: Props) {
 
   const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch({ type: "add", payload: "" });
+  };
+
+  const handleOnDelete = (id: number) => {
+    dispatch({ type: "delete", payload: id });
   };
 
   return (
@@ -155,6 +162,7 @@ function App({}: Props) {
                   variant="outlined"
                   size="small"
                   startIcon={<DeleteIcon />}
+                  onClick={() => handleOnDelete(item.id)}
                 >
                   Delete
                 </Button>
