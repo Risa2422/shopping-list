@@ -29,7 +29,8 @@ function App({}: Props) {
     | { type: "change"; payload: string }
     | { type: "add" }
     | { type: "delete"; payload: number }
-    | { type: "edit"; payload: number };
+    | { type: "edit"; payload: number }
+    | { type: "checked"; payload: number };
 
   const initialValue: State = {
     inputItem: "",
@@ -64,6 +65,15 @@ function App({}: Props) {
         );
         return { ...state, shoppingItems: newState };
 
+      case "checked":
+        const isChecked = state.shoppingItems.map((item) =>
+          item.id === action.payload
+            ? { ...item, isChecked: !item.isChecked }
+            : item
+        );
+
+        return { ...state, shoppingItems: isChecked };
+
       case "edit":
         return state;
 
@@ -85,6 +95,10 @@ function App({}: Props) {
 
   const handleOnDelete = (id: number) => {
     dispatch({ type: "delete", payload: id });
+  };
+
+  const handleToggle = (id: number) => {
+    dispatch({ type: "checked", payload: id });
   };
 
   return (
