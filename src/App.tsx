@@ -1,5 +1,13 @@
-import React, { useReducer, useRef, useState } from "react";
-import { Button, colors, Typography } from "@mui/material";
+import React, { useReducer, useRef } from "react";
+import {
+  Button,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import FormGroup from "@mui/material/FormGroup";
@@ -119,7 +127,7 @@ function App({}: Props) {
         sx={{
           width: "400px",
           height: "300px",
-          p: 3,
+          p: 4,
           border: "1px solid grey",
           background: "white",
         }}
@@ -133,6 +141,7 @@ function App({}: Props) {
           sx={{
             justifyContent: "center",
             alignItems: "center",
+            marginTop: "10px",
           }}
         >
           <Input
@@ -158,39 +167,62 @@ function App({}: Props) {
             Add
           </Button>
         </Stack>
-        <FormGroup sx={{ height: "150px", overflowY: "auto" }}>
-          <Box component="ul" sx={{ padding: "10px" }}>
-            {state.shoppingItems.map((item) => (
-              <Stack
-                direction="row"
-                justifyContent="space"
-                alignItems={"center"}
-                sx={{ justifyContent: "space-between" }}
+        <List
+          sx={{
+            margin: "15px 0px",
+            width: "100%",
+            height: "200px",
+            overflowY: "auto",
+            bgcolor: "background.paper",
+          }}
+        >
+          {state.shoppingItems.map((item) => {
+            const labelId = `checkbox-list-label-${item.id}`;
+            return (
+              <ListItem
+                key={item.id}
+                secondaryAction={
+                  <Stack direction="row" spacing={2}>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      startIcon={<DeleteIcon />}
+                      onClick={() => handleOnDelete(item.id)}
+                    >
+                      Delete
+                    </Button>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      startIcon={<Edit />}
+                    >
+                      Edit
+                    </Button>
+                  </Stack>
+                }
+                disablePadding
               >
-                <Box component="li" key={item.id} sx={{ listStyle: "none" }}>
-                  <FormControlLabel
-                    control={<Checkbox />}
-                    label={item.itemName}
-                    sx={{ color: "black" }}
-                  />
-                </Box>
-                <Stack direction="row" spacing={1}>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    startIcon={<DeleteIcon />}
-                    onClick={() => handleOnDelete(item.id)}
-                  >
-                    Delete
-                  </Button>
-                  <Button variant="contained" size="small" startIcon={<Edit />}>
-                    Edit
-                  </Button>
-                </Stack>
-              </Stack>
-            ))}
-          </Box>
-        </FormGroup>
+                <ListItemButton
+                  role={undefined}
+                  onClick={() => handleToggle(item.id)}
+                  dense
+                >
+                  <ListItemIcon>
+                    <Checkbox
+                      edge="start"
+                      checked={item.isChecked}
+                      tabIndex={-1}
+                      disableRipple
+                      inputProps={{ "aria-labelledby": labelId }}
+                      sx={{ minWidth: 0 }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText id={labelId} primary={item.itemName} />
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
+        </List>
       </Box>
     </Container>
   );
