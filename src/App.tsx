@@ -184,17 +184,17 @@ function App({}: Props) {
                     <Button
                       variant="outlined"
                       size="small"
-                      startIcon={<DeleteIcon />}
                       onClick={() => handleOnDelete(item.id)}
+                      sx={{ minWidth: 0, padding: 1 }}
                     >
-                      Delete
+                      <DeleteIcon fontSize="small" />
                     </Button>
                     <Button
                       variant="contained"
                       size="small"
-                      startIcon={<Edit />}
+                      sx={{ minWidth: 0, padding: 1 }}
                     >
-                      Edit
+                      <Edit fontSize="small" />
                     </Button>
                   </Stack>
                 }
@@ -205,7 +205,7 @@ function App({}: Props) {
                   onClick={() => handleToggle(item.id)}
                   dense
                 >
-                  <ListItemIcon>
+                  <ListItemIcon sx={{ minWidth: 0 }}>
                     <Checkbox
                       edge="start"
                       checked={item.isChecked}
@@ -215,7 +215,11 @@ function App({}: Props) {
                       sx={{ minWidth: 0 }}
                     />
                   </ListItemIcon>
-                  <ListItemText id={labelId} primary={item.itemName} />
+                  <ListItemText
+                    id={labelId}
+                    primary={item.itemName}
+                    sx={{ color: "black" }}
+                  />
                 </ListItemButton>
               </ListItem>
             );
