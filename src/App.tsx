@@ -69,7 +69,7 @@ function App({}: Props) {
 
         return {
           ...state,
-          shoppingItems: [...state.shoppingItems, newItem],
+          shoppingItems: [newItem, ...state.shoppingItems],
           inputItem: "",
         };
 
@@ -80,13 +80,17 @@ function App({}: Props) {
         return { ...state, shoppingItems: newState };
 
       case "checked":
-        const isChecked = state.shoppingItems.map((item) =>
+        const updateItems = state.shoppingItems.map((item) =>
           item.id === action.payload
             ? { ...item, isChecked: !item.isChecked }
             : item
         );
 
-        return { ...state, shoppingItems: isChecked };
+        const sortedItems = updateItems.sort((a, b) => {
+          return a.isChecked === b.isChecked ? 0 : a.isChecked ? 1 : -1;
+        });
+
+        return { ...state, shoppingItems: sortedItems };
 
       case "edit":
         const isEdit = state.shoppingItems.map((item) =>
