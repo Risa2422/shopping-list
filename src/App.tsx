@@ -24,6 +24,8 @@ function App({}: Props) {
     id: number;
     itemName: string;
     isChecked: boolean;
+    isEdit: boolean;
+    editItemName: string;
   };
 
   type State = {
@@ -36,7 +38,9 @@ function App({}: Props) {
     | { type: "add" }
     | { type: "delete"; payload: number }
     | { type: "edit"; payload: number }
-    | { type: "checked"; payload: number };
+    | { type: "checked"; payload: number }
+    | { type: "edit"; payload: number }
+    | { type: "editInput"; payload: { id: number; name: string } };
 
   const initialValue: State = {
     inputItem: "",
@@ -55,6 +59,8 @@ function App({}: Props) {
           id: counterRef.current,
           itemName: state.inputItem,
           isChecked: false,
+          isEdit: false,
+          editItemName: state.inputItem,
         };
 
         counterRef.current++;
@@ -81,7 +87,24 @@ function App({}: Props) {
         return { ...state, shoppingItems: isChecked };
 
       case "edit":
-        return state;
+        const isEdit = state.shoppingItems.map((item) =>
+          item.id === action.payload ? { ...item, isEdit: !item.isEdit } : item
+        );
+
+        return { ...state, shoppingItems: isEdit };
+
+      case "editInput":
+        const editItem = state.shoppingItems.map((item) =>
+          item.id === action.payload.id
+            ? {
+                ...item,
+                editItemName: action.payload.name,
+                itemName: action.payload.name,
+              }
+            : item
+        );
+
+        return { ...state, shoppingItems: editItem };
 
       default:
         return state;
@@ -105,6 +128,20 @@ function App({}: Props) {
 
   const handleToggle = (id: number) => {
     dispatch({ type: "checked", payload: id });
+  };
+
+  const handleOnEdit = (id: number) => {
+    dispatch({ type: "edit", payload: id });
+  };
+
+  const handleOnEditInput = (id: number, name: string) => {
+    dispatch({ type: "editInput", payload: { id, name } });
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>, id: number) => {
+    if (e.key === "Enter") {
+      dispatch({ type: "edit", payload: id });
+    }
   };
 
   return (
@@ -192,6 +229,7 @@ function App({}: Props) {
                     <Button
                       variant="contained"
                       size="small"
+                      onClick={() => handleOnEdit(item.id)}
                       sx={{ minWidth: 0, padding: 1 }}
                     >
                       <Edit fontSize="small" />
@@ -202,7 +240,9 @@ function App({}: Props) {
               >
                 <ListItemButton
                   role={undefined}
-                  onClick={() => handleToggle(item.id)}
+                  onClick={
+                    !item.isEdit ? () => handleToggle(item.id) : undefined
+                  }
                   dense
                 >
                   <ListItemIcon sx={{ minWidth: 0 }}>
