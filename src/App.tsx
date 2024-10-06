@@ -6,6 +6,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  TextField,
   Typography,
 } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -48,6 +49,7 @@ function App({}: Props) {
   };
 
   const counterRef = useRef(0);
+  const [error, setError] = useState(false);
 
   function reducer(state: State, action: actionType): State {
     switch (action.type) {
@@ -119,7 +121,12 @@ function App({}: Props) {
   };
 
   const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    dispatch({ type: "add" });
+    if (state.inputItem.trim()) {
+      dispatch({ type: "add" });
+      setError(false);
+    } else {
+      setError(true);
+    }
   };
 
   const handleOnDelete = (id: number) => {
@@ -179,12 +186,16 @@ function App({}: Props) {
             marginTop: "10px",
           }}
         >
-          <Input
+          <TextField
             placeholder="Type an item name"
+            id="standard-error-helper-text"
+            variant="standard"
             required
             onChange={handleOnChange}
             value={state.inputItem}
-            sx={{ width: "300px" }}
+            error={error}
+            helperText={"This is required."}
+            sx={{ width: "100%", padding: "0 5px" }}
           />
           <Button
             type="button"
