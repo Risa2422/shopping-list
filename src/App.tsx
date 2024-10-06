@@ -255,11 +255,24 @@ function App({}: Props) {
                       sx={{ minWidth: 0 }}
                     />
                   </ListItemIcon>
-                  <ListItemText
-                    id={labelId}
-                    primary={item.itemName}
-                    sx={{ color: "black" }}
-                  />
+                  {item.isEdit ? (
+                    <Input
+                      placeholder=""
+                      required
+                      onChange={(e) =>
+                        handleOnEditInput(item.id, e.target.value)
+                      }
+                      onKeyDown={(e) => handleKeyDown(e, item.id)}
+                      value={item.editItemName}
+                      sx={{ width: "70%", padding: "0 5px" }}
+                    />
+                  ) : (
+                    <ListItemText
+                      id={labelId}
+                      primary={item.itemName}
+                      sx={{ color: "black" }}
+                    />
+                  )}
                 </ListItemButton>
               </ListItem>
             );
