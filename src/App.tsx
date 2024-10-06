@@ -1,4 +1,4 @@
-import React, { useReducer, useRef } from "react";
+import React, { useReducer, useRef, useState } from "react";
 import {
   Button,
   List,
@@ -165,29 +165,40 @@ function App({}: Props) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#2e4f66",
+        backgroundColor: "#D8D2C2",
       }}
     >
       <Box
         component="section"
         sx={{
-          width: "400px",
-          height: "300px",
-          p: 4,
+          width: "500px",
+          height: "360px",
+          margin: 3,
+          padding: {
+            sm: 3,
+            xs: 2,
+          },
           border: "1px solid grey",
+          borderRadius: "20px",
           background: "white",
         }}
       >
-        <Typography variant="h4" sx={{ color: "black" }}>
-          What to buy
+        <Typography
+          variant="h5"
+          sx={{
+            color: "#072d48",
+            fontFamily: "Helvetica Neue",
+            fontWeight: "500",
+          }}
+        >
+          You will get...
         </Typography>
         <Stack
           direction="row"
           spacing={2}
           sx={{
-            justifyContent: "center",
-            alignItems: "center",
             marginTop: "10px",
+            width: "100%",
           }}
         >
           <TextField
@@ -206,6 +217,10 @@ function App({}: Props) {
             sx={{
               color: red[300],
               border: "solid 1px #8c8989",
+              height: "40px",
+              "&:active": {
+                border: "solid 1px #af0d0d",
+              },
               "&:hover": {
                 color: "#fbf6f6",
                 bgcolor: red[300],
@@ -219,9 +234,8 @@ function App({}: Props) {
         </Stack>
         <List
           sx={{
-            margin: "15px 0px",
             width: "100%",
-            height: "200px",
+            maxHeight: "240px",
             overflowY: "auto",
             bgcolor: "background.paper",
           }}
