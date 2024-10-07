@@ -179,7 +179,7 @@ function App({}: Props) {
             xs: 2,
           },
           border: "solid 1px #979494",
-          borderRadius: "20px",
+          borderRadius: "10px",
           background: "white",
         }}
       >
@@ -216,7 +216,7 @@ function App({}: Props) {
               width: "100%",
               padding: "0 5px",
               "& .MuiInput-underline:after": {
-                borderBottom: "1px solid #8c8989",
+                borderBottom: ".3px solid #8a898c",
               },
             }}
           />
@@ -344,7 +344,18 @@ function App({}: Props) {
                       sx={{
                         width: { xs: "55%", sm: "70%" },
                         padding: "0 5px",
-                        border: "none",
+                        "&:before": {
+                          borderBottom: "0.4px solid #8c8989",
+                        },
+                        "&:after": {
+                          borderBottom: "0.4px solid #8c8989",
+                        },
+                        "&:hover:before": {
+                          borderBottom: "none",
+                        },
+                        "&:hover:after": {
+                          borderBottom: "none",
+                        },
                       }}
                     />
                   ) : (
