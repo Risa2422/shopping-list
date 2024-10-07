@@ -24,9 +24,9 @@ function App({}: Props) {
   type shoppingItems = {
     id: number;
     itemName: string;
+    editItemName: string;
     isChecked: boolean;
     isEdit: boolean;
-    editItemName: string;
   };
 
   type State = {
@@ -119,7 +119,7 @@ function App({}: Props) {
 
   const [state, dispatch] = useReducer(reducer, initialValue);
 
-  /* Event */
+  /* Events */
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: "change", payload: e.target.value });
   };
@@ -178,7 +178,7 @@ function App({}: Props) {
             sm: 3,
             xs: 2,
           },
-          border: "1px solid grey",
+          border: "solid 1px #979494",
           borderRadius: "20px",
           background: "white",
         }}
@@ -186,19 +186,21 @@ function App({}: Props) {
         <Typography
           variant="h5"
           sx={{
-            color: "#072d48",
+            marginBottom: "10px",
+            color: "#4A4947",
             fontFamily: "Helvetica Neue",
             fontWeight: "500",
+            paddingLeft: "10px",
           }}
         >
-          You will get...
+          You Need To Buy...
         </Typography>
         <Stack
           direction="row"
           spacing={2}
           sx={{
-            marginTop: "10px",
-            width: "100%",
+            margin: "10px 0px 0 10px",
+            width: "95%",
           }}
         >
           <TextField
@@ -210,14 +212,21 @@ function App({}: Props) {
             value={state.inputItem}
             error={error}
             helperText={"This is required."}
-            sx={{ width: "100%", padding: "0 5px" }}
+            sx={{
+              width: "100%",
+              padding: "0 5px",
+              "& .MuiInput-underline:after": {
+                borderBottom: "1px solid #8c8989",
+              },
+            }}
           />
           <Button
             type="button"
             sx={{
-              color: red[300],
+              color: red[400],
               border: "solid 1px #8c8989",
               height: "40px",
+              margin: 0,
               "&:active": {
                 border: "solid 1px #af0d0d",
               },
@@ -225,6 +234,10 @@ function App({}: Props) {
                 color: "#fbf6f6",
                 bgcolor: red[300],
                 border: "solid 1px #8c8989",
+              },
+              "&:focus": {
+                outline: 0,
+                border: "solid 1px #df2d19998w",
               },
             }}
             onClick={handleOnClick}
@@ -251,15 +264,40 @@ function App({}: Props) {
                       variant="outlined"
                       size="small"
                       onClick={() => handleOnDelete(item.id)}
-                      sx={{ minWidth: 0, padding: 1 }}
+                      sx={{
+                        minWidth: 0,
+                        padding: 1,
+                        border: "solid 1px #8c8989",
+                        "&:hover": {
+                          border: "solid 1px #8c8989",
+                          background: "#fafafa",
+                        },
+                      }}
                     >
-                      <DeleteIcon fontSize="small" />
+                      <DeleteIcon
+                        fontSize="small"
+                        sx={{
+                          color: "#9c762f",
+                        }}
+                      />
                     </Button>
                     <Button
                       variant="contained"
                       size="small"
                       onClick={() => handleOnEdit(item.id)}
-                      sx={{ minWidth: 0, padding: 1 }}
+                      sx={{
+                        minWidth: 0,
+                        padding: 1,
+                        background: item.isEdit ? "#b75632" : "#9c7e45",
+                        border: "solid 1px #8c8989",
+                        "&:hover": {
+                          border: "solid 1px #8c8989",
+                        },
+                        "&:focus": {
+                          outline: 0,
+                          border: "solid 1px #8c8989",
+                        },
+                      }}
                     >
                       <Edit fontSize="small" />
                     </Button>
@@ -272,6 +310,11 @@ function App({}: Props) {
                   onClick={
                     !item.isEdit ? () => handleToggle(item.id) : undefined
                   }
+                  sx={{
+                    "&.Mui-focusVisible": {
+                      backgroundColor: "transparent",
+                    },
+                  }}
                   dense
                 >
                   <ListItemIcon sx={{ minWidth: 0 }}>
@@ -281,7 +324,12 @@ function App({}: Props) {
                       tabIndex={-1}
                       disableRipple
                       inputProps={{ "aria-labelledby": labelId }}
-                      sx={{ minWidth: 0 }}
+                      sx={{
+                        color: "#8c8989",
+                        "&.Mui-checked": {
+                          color: "#8c8989",
+                        },
+                      }}
                     />
                   </ListItemIcon>
                   {item.isEdit ? (
@@ -293,7 +341,11 @@ function App({}: Props) {
                       }
                       onKeyDown={(e) => handleKeyDown(e, item.id)}
                       value={item.editItemName}
-                      sx={{ width: "70%", padding: "0 5px" }}
+                      sx={{
+                        width: { xs: "55%", sm: "70%" },
+                        padding: "0 5px",
+                        border: "none",
+                      }}
                     />
                   ) : (
                     <ListItemText
