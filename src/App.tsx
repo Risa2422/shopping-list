@@ -17,6 +17,7 @@ import Stack from "@mui/material/Stack";
 import { red } from "@mui/material/colors";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Edit from "@mui/icons-material/Edit";
+import backgroundImage from "./images/background-img.jpg";
 
 type Props = {};
 
@@ -166,13 +167,16 @@ function App({}: Props) {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#D8D2C2",
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "50% 50%",
       }}
     >
       <Box
         component="section"
         sx={{
           width: "500px",
-          height: "360px",
+          height: "550px",
           margin: 3,
           padding: {
             sm: 3,
@@ -248,7 +252,7 @@ function App({}: Props) {
         <List
           sx={{
             width: "100%",
-            maxHeight: "240px",
+            maxHeight: "440px",
             overflowY: "auto",
             bgcolor: "background.paper",
           }}
