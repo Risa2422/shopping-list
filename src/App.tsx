@@ -41,7 +41,6 @@ function App({}: Props) {
     | { type: "delete"; payload: number }
     | { type: "edit"; payload: number }
     | { type: "checked"; payload: number }
-    | { type: "edit"; payload: number }
     | { type: "editInput"; payload: { id: number; name: string } };
 
   const initialValue: State = {
