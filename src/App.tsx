@@ -41,7 +41,6 @@ function App({}: Props) {
     | { type: "delete"; payload: number }
     | { type: "edit"; payload: number }
     | { type: "checked"; payload: number }
-    | { type: "edit"; payload: number }
     | { type: "editInput"; payload: { id: number; name: string } };
 
   const initialValue: State = {
@@ -138,7 +137,7 @@ function App({}: Props) {
     dispatch({ type: "delete", payload: id });
   };
 
-  const handleToggle = (id: number) => {
+  const handleOnToggle = (id: number) => {
     dispatch({ type: "checked", payload: id });
   };
 
@@ -312,7 +311,7 @@ function App({}: Props) {
                 <ListItemButton
                   role={undefined}
                   onClick={
-                    !item.isEdit ? () => handleToggle(item.id) : undefined
+                    !item.isEdit ? () => handleOnToggle(item.id) : undefined
                   }
                   sx={{
                     "&.Mui-focusVisible": {
